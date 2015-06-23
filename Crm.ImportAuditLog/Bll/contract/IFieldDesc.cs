@@ -11,6 +11,6 @@ namespace Crm.ImportAuditLog.Bll
 {
     public interface IFieldDesc
     {
-        CrmValueAttrbite GetValue(string key,Entity  entity);
+        CrmValueAttrbite GetValue(string key, CrmAttrbite attr,Entity entity);
     }
 }

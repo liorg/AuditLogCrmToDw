@@ -10,14 +10,14 @@ namespace Crm.ImportAuditLog.Bll
 {
     public class FieldValueBase : IFieldDesc
     {
-        Action<string> _log;
+       protected Action<string> _log;
 
         public FieldValueBase(Action<string> log)
         {
             _log = log;
         }
 
-        public CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
+        public virtual CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
         {
             return new CrmValueAttrbite { AttributeTypeName = attr.AttributeTypeName, DisplayName = attr.DisplayName, FieldName = attr.FieldName };
 

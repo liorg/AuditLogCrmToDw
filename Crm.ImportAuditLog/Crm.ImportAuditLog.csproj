@@ -75,11 +75,12 @@
     <Compile Include="Bll\contract\IJobTime.cs" />
     <Compile Include="Bll\Implemntation\CrmAuditLogService.cs" />
     <Compile Include="Bll\Implemntation\DWService.cs" />
+    <Compile Include="Bll\Implemntation\Factory\LoopkupFieldValue.cs" />
+    <Compile Include="Bll\Implemntation\FieldValueBase.cs" />
     <Compile Include="Bll\Implemntation\JobService.cs" />
     <Compile Include="Bll\Implemntation\MappingCrmToDw.cs" />
     <Compile Include="Bll\Implemntation\CrmSchema.cs" />
     <Compile Include="Bll\Implemntation\FactoryFieldsValue.cs" />
-    <Compile Include="Bll\Implemntation\LoopkupFieldValue.cs" />
     <Compile Include="Bll\Implemntation\RemoveDuplicateAuditLog.cs" />
     <Compile Include="Dal\DWAuditLog.cs" />
     <Compile Include="DataModel\CrmAttrbite.cs" />
