@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Crm.ImportAuditLog.DataModel
 {
-    public class CrmValueAttrbite : CrmAttrbite
+    public class CrmValueAttrbite //: CrmAttrbite
     {
         public string FieldValue { get; set; }
 

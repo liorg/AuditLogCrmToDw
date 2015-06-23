@@ -25,18 +25,19 @@ namespace Crm.ImportAuditLog.Bll
 
         public void RetreiveAndSet(IConfiguration config, IJobTime job, Imapping mapping, IDwService dw)
         {
-            //   var month=config.Get("LastXMonth").ToString();
             var maxRecordsPerExcution = int.Parse(config.Get("MaxRecordsPerExcution").ToString());
             var languageCode = int.Parse(config.Get("LanguageCode").ToString());
-
+            var untilDate = config.Get("UntilDate").ToString();
+            var last = DateTime.Now; 
+            var first = job.RetrieveLastDateJob(config);
+            
+            if (!String.IsNullOrWhiteSpace(untilDate))
+                last = DateTime.ParseExact(untilDate, "yyyy-MM-dd", null);
+            
             int pageNumber = 1;int gCount=0;
           
             List<AuditLogModel> audtLogs;
             bool moreRecords = true;
-
-            var first = job.RetrieveLastDateJob(config);
-            var last = DateTime.Now;
-
             do
             {
                 audtLogs = new List<AuditLogModel>();
@@ -51,8 +52,7 @@ namespace Crm.ImportAuditLog.Bll
                     Criteria = new FilterExpression
                     {
                         FilterOperator = LogicalOperator.And,
-                        Conditions = {
-                              new ConditionExpression
+                        Conditions = { new ConditionExpression
                               {
                                   AttributeName = "createdon",
                                   Operator = ConditionOperator.Between,
@@ -60,8 +60,7 @@ namespace Crm.ImportAuditLog.Bll
                               }
                           },
                     },
-                    Orders = {
-                                new OrderExpression
+                    Orders = { new OrderExpression
                                 {
                                     AttributeName = "createdon",
                                     OrderType = OrderType.Descending// must change asc
@@ -87,13 +86,10 @@ namespace Crm.ImportAuditLog.Bll
                     };
 
                     var auditDetailsResponse = (RetrieveAuditDetailsResponse)_service.Execute(auditDetailsRequest);
-                   // var audtLog = auditDetailsResponse.AuditDetail;
-                   // var xx = (AttributeAuditDetail)auditDetailsResponse.AuditDetail;
-                    //Debug.WriteLine(xx.NewValue.Attributes);
-                   // AuditLogModel auditLogDw = new AuditLogModel();
-               //     mapping.Map(auditDetailsResponse.AuditDetail, auditLogDw);
+                 
                     var changes = mapping.ToDwItems(_service, auditDetailsResponse.AuditDetail, languageCode);
-                    audtLogs.AddRange(changes);
+                    if (changes.Any())
+                        audtLogs.AddRange(changes);
 
                 }
                 moreRecords = resp.EntityCollection.MoreRecords;

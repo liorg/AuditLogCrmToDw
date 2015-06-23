@@ -10,17 +10,16 @@ namespace Crm.ImportAuditLog.Bll
 {
     public class MoneyFieldValue : FieldValueBase
     {
-        Action<string> _log;
-
+       
         public MoneyFieldValue(Action<string> log)
             : base(log)
         {
-            _log = log;
+          
         }
 
-        public override CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
+        public override CrmValueAttrbite GetValue(string key, Entity entity)
         {
-            var val = base.GetValue(key, attr, entity);
+            var val = base.GetValue(key, entity);
             if (entity.Contains(key) && entity[key] != null && entity[key] is OptionSetValue)
             {
                 val.FieldValue = entity.GetAttributeValue<OptionSetValue>(key).Value.ToString();

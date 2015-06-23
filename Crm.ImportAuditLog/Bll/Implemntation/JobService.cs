@@ -23,14 +23,14 @@ namespace Crm.ImportAuditLog.Bll
             DateTime dt = DateTime.MinValue;
             _log("retrieve last date");
             var roundEndDateMinutesValue = int.Parse(config.Get("RoundEndDateMintuesValue").ToString());
-            var lastXMonth = int.Parse(config.Get("LastXMonth").ToString());
+            var lastXDays = int.Parse(config.Get("LastXDays").ToString()) * -1;
 
             using (DWAuditLog context = new DWAuditLog())
             {
                 var dateLast = context.Jobs.Take(1).OrderByDescending(j => j.EndDate).FirstOrDefault();
                 if (dateLast == null)
                 {
-                    dt = DateTime.Now.AddMonths(lastXMonth);
+                    dt = DateTime.Now.AddDays(lastXDays);
                     _log("dateLast is null then" + dt.ToString("yyyyMMdd hh:mm:ss"));
                 }
                 else
@@ -50,7 +50,7 @@ namespace Crm.ImportAuditLog.Bll
 
         public void UpdateEndDateOnComplete(int count, DateTime endDate)
         {
-            _log("UpdateEndDateOnComplete" +count.ToString()+" enddate" +endDate.ToString("yyyyMMdd hh:mm:ss"));
+            _log("UpdateEndDateOnComplete" + count.ToString() + " enddate" + endDate.ToString("yyyyMMdd hh:mm:ss"));
 
             using (DWAuditLog context = new DWAuditLog())
             {

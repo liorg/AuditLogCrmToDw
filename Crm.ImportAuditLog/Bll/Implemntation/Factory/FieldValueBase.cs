@@ -17,9 +17,10 @@ namespace Crm.ImportAuditLog.Bll
             _log = log;
         }
 
-        public virtual CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
+        public virtual CrmValueAttrbite GetValue(string key,  Entity entity)
         {
-            return new CrmValueAttrbite { AttributeTypeName = attr.AttributeTypeName, DisplayName = attr.DisplayName, FieldName = attr.FieldName ,FieldValue=""};
+            return new CrmValueAttrbite { FieldValue = "" };
+           // return new CrmValueAttrbite { AttributeTypeName = attr.AttributeTypeName, DisplayName = attr.DisplayName, FieldName = attr.FieldName ,FieldValue=""};
 
         }
     }

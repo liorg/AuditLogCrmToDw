@@ -18,11 +18,11 @@ namespace Crm.ImportAuditLog.Bll
         //const string DecimalType;
         //const string DoubleType;
         //const string EntityNameType;
-        readonly string ImageType = "ImageType"; //unsopported
+        const string ImageType = "ImageType"; //unsopported
         //const static readonly string IntegerType;
         const string LookupType = "LookupType";
         //const string ManagedPropertyType;
-        //const string MemoType;
+        const string MemoType = "MemoType"; // is string
         const string MoneyType = "MoneyType";
         const string OwnerType = "OwnerType";
         //const string PartyListType;
@@ -47,8 +47,13 @@ namespace Crm.ImportAuditLog.Bll
            
             switch (attr.AttributeTypeName)
             {
+                case DateTimeType:
+                    return new DatetimeFieldValue(_log);
                 case LookupType:
+                case OwnerType:
                     return new LoopkupFieldValue(_log);
+                case ImageType:
+                    return null;
                 case PicklistType:
                 case StateType:
                 case StatusType:

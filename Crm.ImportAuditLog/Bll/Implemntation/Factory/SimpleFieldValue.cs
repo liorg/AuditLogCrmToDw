@@ -18,9 +18,9 @@ namespace Crm.ImportAuditLog.Bll
            
         }
 
-        public override CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
+        public override CrmValueAttrbite GetValue(string key, Entity entity)
         {
-            var val = base.GetValue(key, attr, entity);
+            var val = base.GetValue(key, entity);
             if (entity.Contains(key) && entity[key] != null)
             {
                 val.FieldValue = entity[key].ToString();

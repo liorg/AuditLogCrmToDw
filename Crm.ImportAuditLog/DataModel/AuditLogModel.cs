@@ -13,18 +13,23 @@ namespace Crm.ImportAuditLog.DataModel
         public DateTime ChangeDateTime { get; set; }
         public string ModifiedByName { get; set; }
         public Guid ModifiedByID { get; set; }
+
         public string ChangeType { get; set; }
         public string EntityType { get; set; }
         public string EntityTypeDesc { get; set; }
+
         public Guid CrmAuditId { get; set; }
 
         public void CopyTo(IAuditLogModel model)
         {
+            model.ModifiedByID = this.ModifiedByID;
             model.ChangeDateTime = this.ChangeDateTime;
             model.ModifiedByName = this.ModifiedByName;
+
             model.ChangeType = this.ChangeType;
             model.EntityType = this.EntityType;
             model.EntityTypeDesc = this.EntityTypeDesc;
+
             model.CrmAuditId = this.CrmAuditId;
         }
 
