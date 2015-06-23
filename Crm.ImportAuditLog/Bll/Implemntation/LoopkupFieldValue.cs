@@ -1,4 +1,5 @@
 ﻿using Crm.ImportAuditLog.DataModel;
+using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Crm.ImportAuditLog.Bll
             _log = log;
         }
 
-        public CrmValueAttrbite GetValue(KeyValuePair<String, object> attr)
+        public CrmValueAttrbite GetValue(string key,Entity  entity)
         {
             return null;
         }
