@@ -56,11 +56,11 @@ namespace Crm.ImportAuditLog
                 return;
             }
 
-            Log("begin running 1.0.0.0");
-
+            
             IConfigurationSource configurationSource = ConfigurationSourceFactory.Create();
             LogWriterFactory logWriterFactory = new LogWriterFactory(configurationSource);
             Logger.SetLogWriter(logWriterFactory.Create());
+            Log("begin running 1.0.0.0");
 
             var config = new AppConfigConfiguration();
             IOrganizationService service = null;
@@ -71,18 +71,13 @@ namespace Crm.ImportAuditLog
                 IJobTime job = new JobService(Log);
                 IRemoveDuplicatesService removeDup = new RemoveDuplicateAuditLog(Log);
                 Imapping mapping = new MappingCrmToDw(Log);
-
                 ICrmAuditLogService crmToDw = new CrmAuditLogService(service, Log);
                 crmToDw.RetreiveAndSet(config, job, mapping, dw);
-
-
             }
             catch (Exception e)
             {
-
                 Log(e.ToString());
             }
-
             Log("end running");
         }
     }
