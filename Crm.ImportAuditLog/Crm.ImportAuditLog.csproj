@@ -75,6 +75,7 @@
     <Compile Include="Bll\contract\IJobTime.cs" />
     <Compile Include="Bll\Implemntation\CrmAuditLogService.cs" />
     <Compile Include="Bll\Implemntation\DWService.cs" />
+    <Compile Include="Bll\Implemntation\Factory\PartyListFieldValue.cs" />
     <Compile Include="Bll\Implemntation\Factory\DatetimeFieldValue.cs" />
     <Compile Include="Bll\Implemntation\Factory\MoneyFieldValue.cs" />
     <Compile Include="Bll\Implemntation\Factory\PicklistFieldValue.cs" />

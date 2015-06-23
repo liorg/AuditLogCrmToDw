@@ -25,7 +25,7 @@ namespace Crm.ImportAuditLog.Bll
         const string MemoType = "MemoType"; // is string
         const string MoneyType = "MoneyType";
         const string OwnerType = "OwnerType";
-        //const string PartyListType;
+        const string PartyListType = "PartyListType";
         const string PicklistType = "PicklistType";
         const string StateType = "StateType";
         const string StatusType = "StatusType";
@@ -47,6 +47,8 @@ namespace Crm.ImportAuditLog.Bll
            
             switch (attr.AttributeTypeName)
             {
+                case PartyListType:
+                    return new PartyListFieldValue(_log);
                 case DateTimeType:
                     return new DatetimeFieldValue(_log);
                 case LookupType:
