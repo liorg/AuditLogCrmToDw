@@ -93,7 +93,6 @@ namespace Crm.ImportAuditLog.Bll
                         audtLogs.AddRange(changes);
                         fieldsChangeCount += changes.Count();
                     }
-
                 }
                 moreRecords = resp.EntityCollection.MoreRecords;
                 if (moreRecords)
