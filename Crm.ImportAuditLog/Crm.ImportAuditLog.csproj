@@ -76,10 +76,11 @@
     <Compile Include="Bll\Implemntation\CrmAuditLogService.cs" />
     <Compile Include="Bll\Implemntation\DWService.cs" />
     <Compile Include="Bll\Implemntation\Factory\DatetimeFieldValue.cs" />
+    <Compile Include="Bll\Implemntation\Factory\MoneyFieldValue.cs" />
     <Compile Include="Bll\Implemntation\Factory\PicklistFieldValue.cs" />
     <Compile Include="Bll\Implemntation\Factory\SimpleFieldValue.cs" />
     <Compile Include="Bll\Implemntation\Factory\LoopkupFieldValue.cs" />
-    <Compile Include="Bll\Implemntation\FieldValueBase.cs" />
+    <Compile Include="Bll\Implemntation\Factory\FieldValueBase.cs" />
     <Compile Include="Bll\Implemntation\JobService.cs" />
     <Compile Include="Bll\Implemntation\MappingCrmToDw.cs" />
     <Compile Include="Bll\Implemntation\CrmSchema.cs" />
