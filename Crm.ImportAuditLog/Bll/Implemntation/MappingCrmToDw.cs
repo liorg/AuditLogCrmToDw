@@ -1,4 +1,6 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿
+using Crm.ImportAuditLog.DataModel;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -10,43 +12,42 @@ using System.Threading.Tasks;
 
 namespace Crm.ImportAuditLog.Bll
 {
-    //public class Changed
-    //{
-    //    public string SchemaName { get; set; }
-    //    public string OldValue { get; set; }
-    //    public string NewValue { get; set; }
-    //}
+   
     public class MappingCrmToDw : Imapping
     {
 
         Action<string> _log;
-
+        CrmSchema _schema;
         public MappingCrmToDw(Action<string> log)
         {
             _log = log;
+            _schema = new CrmSchema(); 
+           // _service = service;
         }
 
         public void Map(Microsoft.Crm.Sdk.Messages.AuditDetail source, DataModel.AuditLogModel target)
         {
+
             var audtLog = source;
             var attr = (AttributeAuditDetail)source;
             Entity record = (Entity)source.AuditRecord;
             var modified = attr.AuditRecord.GetAttributeValue<EntityReference>("userid");
-            DisplayAuditDetails(audtLog);
+            
             target.AuditLogId = Guid.NewGuid();
             target.ChangeDateTime = attr.AuditRecord.GetAttributeValue<DateTime>("createdon");
 
             target.ChangeType = record.FormattedValues["operation"];
             target.CrmAuditId = audtLog.AuditRecord.Id;
             target.EntityType = record.GetAttributeValue<EntityReference>("objectid").LogicalName;
+           
+            // _schema.GetEntityFields()
+            DisplayAuditDetails(audtLog);
             target.EntityTypeDesc = record.FormattedValues["objecttypecode"]; // record.GetAttributeValue<EntityReference>("objectid").LogicalName;
             target.FieldDesc = "";
             target.FieldSchemaName = "";
             target.ModifiedByID = modified.Id;
             target.NewValue = "";
             target.OldValue = "";
-            // target.FieldSchemaName=
-
 
         }
 
@@ -110,23 +111,26 @@ namespace Crm.ImportAuditLog.Bll
             Console.WriteLine();
         }
 
-        public IEnumerable<DataModel.AuditLogModel> ToDw(IOrganizationService service,AuditDetail source)
+        public IEnumerable<DataModel.AuditLogModel> ToDwItems(IOrganizationService service, AuditDetail source, int langCode)
         {
             List<DataModel.AuditLogModel> items = new List<DataModel.AuditLogModel>();
             var audtLog = source;
             var attr = (AttributeAuditDetail)source;
             Entity record = (Entity)source.AuditRecord;
+            IAuditLogModel baseEntity = new DataModel.AuditLogModelBase();
             var modified = attr.AuditRecord.GetAttributeValue<EntityReference>("userid");
+            baseEntity.EntityType = record.GetAttributeValue<EntityReference>("objectid").LogicalName;
+            baseEntity.EntityTypeDesc = record.FormattedValues["objecttypecode"]; // record.GetAttributeValue<EntityReference>("objectid").LogicalName;
+
+            _schema.GetEntityFields(service, _log, baseEntity.EntityType, 1037);
             DisplayAuditDetails(audtLog);
-            DataModel.AuditLogModelBase baseEntity = new DataModel.AuditLogModelBase();
+           
            // baseEntity.AuditLogId = Guid.NewGuid();
             baseEntity.ChangeDateTime = attr.AuditRecord.GetAttributeValue<DateTime>("createdon");
 
             baseEntity.ChangeType = record.FormattedValues["operation"];
             baseEntity.CrmAuditId = audtLog.AuditRecord.Id;
-            baseEntity.EntityType = record.GetAttributeValue<EntityReference>("objectid").LogicalName;
-            baseEntity.EntityTypeDesc = record.FormattedValues["objecttypecode"]; // record.GetAttributeValue<EntityReference>("objectid").LogicalName;
-           // baseEntity.FieldDesc = "";
+             // baseEntity.FieldDesc = "";
            // baseEntity.FieldSchemaName = "";
             baseEntity.ModifiedByID = modified.Id;
           //  baseEntity.NewValue = "";
@@ -140,9 +144,11 @@ namespace Crm.ImportAuditLog.Bll
             RetrieveEntityResponse retrieveBankAccountEntityResponse = (RetrieveEntityResponse)service.Execute(retrieveBankAccountEntityRequest);
             foreach (var attEntity in retrieveBankAccountEntityResponse.EntityMetadata.Attributes)
             {
-                
+              //  attEntity.AttributeTypeName.Value
             }
             return items;
         }
+
+
     }
 }

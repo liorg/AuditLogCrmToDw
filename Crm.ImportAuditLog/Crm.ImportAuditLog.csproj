@@ -66,8 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bll\contract\IAuditLogModel.cs" />
     <Compile Include="Bll\contract\IDwService.cs" />
     <Compile Include="Bll\contract\ICrmAuditLogService.cs" />
+    <Compile Include="Bll\contract\IFieldDesc.cs" />
     <Compile Include="Bll\contract\Imapping.cs" />
     <Compile Include="Bll\contract\IRemoveDuplicatesService.cs" />
     <Compile Include="Bll\contract\IJobTime.cs" />
@@ -75,8 +77,13 @@
     <Compile Include="Bll\Implemntation\DWService.cs" />
     <Compile Include="Bll\Implemntation\JobService.cs" />
     <Compile Include="Bll\Implemntation\MappingCrmToDw.cs" />
+    <Compile Include="Bll\Implemntation\CrmSchema.cs" />
+    <Compile Include="Bll\Implemntation\FactoryFieldsValue.cs" />
+    <Compile Include="Bll\Implemntation\LoopkupFieldValue.cs" />
     <Compile Include="Bll\Implemntation\RemoveDuplicateAuditLog.cs" />
     <Compile Include="Dal\DWAuditLog.cs" />
+    <Compile Include="DataModel\CrmAttrbite.cs" />
+    <Compile Include="DataModel\CrmValueAttrbite.cs" />
     <Compile Include="DataModel\Job.cs" />
     <Compile Include="DataModel\AuditLogModel.cs" />
     <Compile Include="Help\AppConfigConfiguration.cs" />

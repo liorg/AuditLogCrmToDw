@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Crm.ImportAuditLog.Bll
 {
-   public interface ICrmAuditLogService
+    public interface ICrmAuditLogService
     {
-
-       void RetreiveAndSet(IConfiguration config,IJobTime job, Imapping mapping, IDwService dw);
+        void RetreiveAndSet(IConfiguration config, IJobTime job, Imapping mapping, IDwService dw);
     }
 }
