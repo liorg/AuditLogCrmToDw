@@ -12,7 +12,7 @@ namespace Crm.ImportAuditLog.Bll
     public class JobService : IJobTime
     {
         Action<string> _log;
-
+        Guid? _jobid;
         public JobService(Action<string> log)
         {
             _log = log;
@@ -34,30 +34,28 @@ namespace Crm.ImportAuditLog.Bll
                     _log("dateLast is null then" + dt.ToString("yyyyMMdd hh:mm:ss"));
                 }
                 else
-                {
-                    dt = dateLast.EndDate;
-                }
+                   dt = dateLast.EndDate;
+                
                 roundEndDateMinutesValue = roundEndDateMinutesValue * -1;
                 dt = dt.AddMinutes(roundEndDateMinutesValue);
                 _log(" last date on db is " + dt.ToString("yyyyMMdd hh:mm:ss"));
-
-
             }
             _log("end last date" + dt.ToString("yyyyMMdd hh:mm:ss"));
             return dt;
 
         }
 
-        public void UpdateEndDateOnComplete(int fieldsChangeCount, int countCrm, DateTime endDate)
+        public void UpdateEndDateOnComplete(int fieldsChangeCount, int countCrm, int? countCountDups, DateTime endDate)
         {
             _log("UpdateEndDateOnComplete fieldsChangeCount=" + fieldsChangeCount.ToString() + " countCrm=" + countCrm.ToString() + " enddate" + endDate.ToString("yyyyMMdd hh:mm:ss"));
 
             using (DWAuditLog context = new DWAuditLog())
             {
                 Job job = new Job();
-                job.JobId = Guid.NewGuid();
+                job.JobId = JobId;
                 job.CountCrmLogs = countCrm;
                 job.CountFieldsChange = fieldsChangeCount;
+                job.CountDuplicates = countCountDups;
                 job.EndDate = endDate;
                 context.Jobs.Add(job);
                 context.SaveChanges();
@@ -65,6 +63,18 @@ namespace Crm.ImportAuditLog.Bll
             _log("End UpdateEndDateOnComplete");
 
 
+        }
+
+        public Guid JobId
+        {
+            get
+            {
+                if (!_jobid.HasValue)
+                {
+                    _jobid = Guid.NewGuid();
+                }
+                return _jobid.Value;
+            }
         }
     }
 }

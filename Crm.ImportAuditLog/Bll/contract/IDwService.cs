@@ -10,5 +10,7 @@ namespace Crm.ImportAuditLog.Bll
     public interface IDwService
     {
         void BulkAdd(IEnumerable<AuditLogModel> entitiesLog);
+
+        int RemoveDuplicate();
     }
 }

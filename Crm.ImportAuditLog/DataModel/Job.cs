@@ -16,5 +16,6 @@ namespace Crm.ImportAuditLog.DataModel
         public DateTime EndDate { get; set; }
         public int CountFieldsChange { get; set; }
         public int CountCrmLogs { get; set; }
+        public int? CountDuplicates { get; set; }
     }
 }

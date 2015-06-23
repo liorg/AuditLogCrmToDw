@@ -11,7 +11,7 @@ namespace Crm.ImportAuditLog.Bll
 {
     public interface Imapping
     {
-        IEnumerable<AuditLogModel> ToDwItems(IOrganizationService service,AuditDetail source,int langCode);
+        IEnumerable<AuditLogModel> ToDwItems(IOrganizationService service,AuditDetail source,int langCode,IJobTime job);
 
 
     }

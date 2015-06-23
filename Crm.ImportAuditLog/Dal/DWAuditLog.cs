@@ -23,7 +23,10 @@ namespace Crm.ImportAuditLog.Dal
         {
             //throw new UnintentionalCodeFirstException();
         }
-
+        public int RemoveDuplicate()
+        {
+            return this.Database.SqlQuery<int>("DW_DeleteDuplicate").FirstOrDefault();
+        }
     }
 }
 

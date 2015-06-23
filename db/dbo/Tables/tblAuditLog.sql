@@ -11,6 +11,10 @@
     [OldValue]        NVARCHAR (MAX)   NULL,
     [NewValue]        NVARCHAR (MAX)   NULL,
     [CrmAuditId]      UNIQUEIDENTIFIER NOT NULL,
+    [ModifiedOn]      DATETIME         CONSTRAINT [DF_tblAuditLog_ModifiedOn] DEFAULT (getdate()) NOT NULL,
+    [JobId]           UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [PK_tblAuditLog] PRIMARY KEY CLUSTERED ([AuditLogId] ASC)
 );
+
+
 

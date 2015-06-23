@@ -5,7 +5,7 @@
 -- =============================================
 
 -- exec DW_DeleteDuplicate
-CREATE PROCEDURE DW_DeleteDuplicate
+CREATE PROCEDURE [dbo].[DW_DeleteDuplicate]
 	-- Add the parameters for the stored procedure here
 	
 AS
@@ -16,10 +16,18 @@ BEGIN
  
 WITH cte AS (
   SELECT FieldSchemaName, CrmAuditId , EntityType , 
-     row_number() OVER(PARTITION BY FieldSchemaName, CrmAuditId , EntityType ORDER BY AuditLogId) AS [rn]
+     row_number() OVER(PARTITION BY FieldSchemaName, CrmAuditId , EntityType ORDER BY ModifiedOn asc) AS [rn]
   FROM tblAuditLog
 )
---SELECT * from cte WHERE [rn] > 2
+
 DELETE cte WHERE [rn] > 1
+select @@ROWCOUNT
 
 END
+
+--WITH cte AS (
+--  SELECT FieldSchemaName, CrmAuditId , EntityType , ModifiedOn,
+--     row_number() OVER(PARTITION BY FieldSchemaName, CrmAuditId , EntityType ORDER BY ModifiedOn asc) AS [rn]
+--  FROM tblAuditLog
+--  )
+--  select * from cte 

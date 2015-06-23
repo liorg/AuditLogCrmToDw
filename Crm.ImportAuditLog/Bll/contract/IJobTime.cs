@@ -9,8 +9,9 @@ namespace Crm.ImportAuditLog.Bll
 {
     public interface IJobTime
     {
+        Guid JobId { get; }
         DateTime RetrieveLastDateJob(IConfiguration config);
 
-        void UpdateEndDateOnComplete(int fieldsChangeCount, int countCrm, DateTime endDate);
+        void UpdateEndDateOnComplete(int fieldsChangeCount, int countCrm,  int? countCountDups ,DateTime endDate);
     }
 }

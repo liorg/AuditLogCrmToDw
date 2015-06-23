@@ -53,6 +53,7 @@ namespace Crm.ImportAuditLog.Bll
                     return new DatetimeFieldValue(_log);
                 case LookupType:
                 case OwnerType:
+                case CustomerType:
                     return new LoopkupFieldValue(_log);
                 case ImageType:
                     return null;

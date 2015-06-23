@@ -10,5 +10,7 @@ namespace Crm.ImportAuditLog.DataModel
         string EntityTypeDesc { get; set; }
         Guid ModifiedByID { get; set; }
         string ModifiedByName { get; set; }
+        DateTime ModifiedOn { get; set; }
+        Guid JobId { get; set; }
     }
 }

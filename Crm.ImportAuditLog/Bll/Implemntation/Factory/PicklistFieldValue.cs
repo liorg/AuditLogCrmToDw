@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Crm.ImportAuditLog.Bll
 {
-    public class MoneyFieldValue : FieldValueBase
+    public class PicklistFieldValue : FieldValueBase
     {
-       
-        public MoneyFieldValue(Action<string> log)
+
+        public PicklistFieldValue(Action<string> log)
             : base(log)
         {
           

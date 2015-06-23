@@ -56,7 +56,7 @@ namespace Crm.ImportAuditLog
                 return;
             }
 
-           
+            Log("begin running 1.0.0.0");
 
             IConfigurationSource configurationSource = ConfigurationSourceFactory.Create();
             LogWriterFactory logWriterFactory = new LogWriterFactory(configurationSource);

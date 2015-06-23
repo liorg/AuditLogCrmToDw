@@ -25,10 +25,13 @@ namespace Crm.ImportAuditLog.Bll
 
         public void RetreiveAndSet(IConfiguration config, IJobTime job, Imapping mapping, IDwService dw)
         {
+            int? duplicates = null;
             var maxRecordsPerExcution = int.Parse(config.Get("MaxRecordsPerExcution").ToString());
             var languageCode = int.Parse(config.Get("LanguageCode").ToString());
             var untilDate = config.Get("UntilDate").ToString();
-            var last = DateTime.Now; 
+            var isRemoveDuplicate = config.Get("IsRemoveDuplicate").ToString();
+
+            var last = DateTime.UtcNow; 
             var first = job.RetrieveLastDateJob(config);
             
             if (!String.IsNullOrWhiteSpace(untilDate))
@@ -80,14 +83,11 @@ namespace Crm.ImportAuditLog.Bll
                     crmLogsItemsCount++;
                     Console.WriteLine(entiyAuditLog.Id);
                     // Retrieve the audit details and display them.
-                    var auditDetailsRequest = new RetrieveAuditDetailsRequest
-                    {
-                        AuditId = entiyAuditLog.Id
-                    };
+                    var auditDetailsRequest = new RetrieveAuditDetailsRequest {   AuditId = entiyAuditLog.Id };
 
                     var auditDetailsResponse = (RetrieveAuditDetailsResponse)_service.Execute(auditDetailsRequest);
-                 
-                    var changes = mapping.ToDwItems(_service, auditDetailsResponse.AuditDetail, languageCode);
+
+                    var changes = mapping.ToDwItems(_service, auditDetailsResponse.AuditDetail, languageCode, job);
                     if (changes.Any())
                     {
                         audtLogs.AddRange(changes);
@@ -103,8 +103,20 @@ namespace Crm.ImportAuditLog.Bll
 
             }
             while (moreRecords);
-            job.UpdateEndDateOnComplete(fieldsChangeCount,crmLogsItemsCount, last);
+           if(isRemoveDuplicate=="1")
+           {
+               try
+               {
+                duplicates=   dw.RemoveDuplicate();
+               }
+               catch (Exception e)
+               {
 
+                   _log("WARNING:can not remove duplicate see log");
+                   _log(e.ToString());
+               }
+           }
+            job.UpdateEndDateOnComplete(fieldsChangeCount,crmLogsItemsCount,duplicates, last);
         }
     }
 }

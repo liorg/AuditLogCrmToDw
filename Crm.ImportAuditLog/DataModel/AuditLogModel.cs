@@ -13,12 +13,12 @@ namespace Crm.ImportAuditLog.DataModel
         public DateTime ChangeDateTime { get; set; }
         public string ModifiedByName { get; set; }
         public Guid ModifiedByID { get; set; }
-
         public string ChangeType { get; set; }
         public string EntityType { get; set; }
         public string EntityTypeDesc { get; set; }
-
         public Guid CrmAuditId { get; set; }
+        public DateTime ModifiedOn { get; set; }
+        public Guid JobId { get; set; }
 
         public void CopyTo(IAuditLogModel model)
         {
@@ -31,6 +31,9 @@ namespace Crm.ImportAuditLog.DataModel
             model.EntityTypeDesc = this.EntityTypeDesc;
 
             model.CrmAuditId = this.CrmAuditId;
+
+            model.ModifiedOn = this.ModifiedOn;
+            model.JobId = this.JobId;
         }
 
     }
@@ -39,24 +42,18 @@ namespace Crm.ImportAuditLog.DataModel
     {
         [Key]
         public Guid AuditLogId { get; set; }
-      
         public string FieldSchemaName { get; set; }
         public string FieldDesc { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
-
         public DateTime ChangeDateTime { get; set; }
         public string ModifiedByName { get; set; }
-
         public Guid ModifiedByID { get; set; }
         public string ChangeType { get; set; }
         public string EntityType { get; set; }
         public string EntityTypeDesc { get; set; }
-
         public Guid CrmAuditId { get; set; }
-        
-
-
-
+        public DateTime ModifiedOn { get; set; }
+        public Guid JobId { get; set; }
     }
 }
