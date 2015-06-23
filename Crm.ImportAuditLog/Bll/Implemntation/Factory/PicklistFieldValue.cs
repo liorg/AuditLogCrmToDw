@@ -8,20 +8,22 @@ using System.Threading.Tasks;
 
 namespace Crm.ImportAuditLog.Bll
 {
-    public class LoopkupFieldValue : FieldValueBase
+    public class PicklistFieldValue : FieldValueBase
     {
-       
-        public LoopkupFieldValue(Action<string> log):base(log)
+        Action<string> _log;
+
+        public PicklistFieldValue(Action<string> log)
+            : base(log)
         {
-           
+            _log = log;
         }
 
         public override CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
         {
             var val = base.GetValue(key, attr, entity);
-            if (entity.Contains(key) && entity[key] != null && entity[key] is EntityReference)
+            if (entity.Contains(key) && entity[key] != null && entity[key] is OptionSetValue)
             {
-                val.FieldValue = entity.GetAttributeValue<EntityReference>(key).Id.ToString();
+                val.FieldValue = entity.GetAttributeValue<OptionSetValue>(key).Value.ToString();
             }
             return val;
         }

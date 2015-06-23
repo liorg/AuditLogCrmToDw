@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace Crm.ImportAuditLog.Bll
 {
-    public class LoopkupFieldValue : FieldValueBase
+    public class SimpleFieldValue : FieldValueBase
     {
-       
-        public LoopkupFieldValue(Action<string> log):base(log)
+        
+
+        public SimpleFieldValue(Action<string> log)
+            : base(log)
         {
            
         }
@@ -19,9 +21,9 @@ namespace Crm.ImportAuditLog.Bll
         public override CrmValueAttrbite GetValue(string key, CrmAttrbite attr, Entity entity)
         {
             var val = base.GetValue(key, attr, entity);
-            if (entity.Contains(key) && entity[key] != null && entity[key] is EntityReference)
+            if (entity.Contains(key) && entity[key] != null)
             {
-                val.FieldValue = entity.GetAttributeValue<EntityReference>(key).Id.ToString();
+                val.FieldValue = entity[key].ToString();
             }
             return val;
         }

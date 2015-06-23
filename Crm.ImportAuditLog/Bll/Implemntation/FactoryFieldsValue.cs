@@ -41,9 +41,13 @@ namespace Crm.ImportAuditLog.Bll
           
         }
 
-        IFieldDesc Get(CrmAttrbite attr,object val)
-        {
-            return null;
-        }
+        //IFieldDesc Get(CrmAttrbite attr,object val)
+        //{
+        //    switch (attr.AttributeTypeName)
+        //    {
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 }
