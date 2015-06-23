@@ -33,8 +33,8 @@ namespace Crm.ImportAuditLog.Bll
             
             if (!String.IsNullOrWhiteSpace(untilDate))
                 last = DateTime.ParseExact(untilDate, "yyyy-MM-dd", null);
-            
-            int pageNumber = 1;int gCount=0;
+
+            int pageNumber = 1; int crmLogsItemsCount = 0; int fieldsChangeCount = 0;
           
             List<AuditLogModel> audtLogs;
             bool moreRecords = true;
@@ -77,7 +77,7 @@ namespace Crm.ImportAuditLog.Bll
                 resp = (RetrieveMultipleResponse)_service.Execute(rmr);
                 foreach (Entity entiyAuditLog in resp.EntityCollection.Entities)
                 {
-                    gCount++;
+                    crmLogsItemsCount++;
                     Console.WriteLine(entiyAuditLog.Id);
                     // Retrieve the audit details and display them.
                     var auditDetailsRequest = new RetrieveAuditDetailsRequest
@@ -89,7 +89,10 @@ namespace Crm.ImportAuditLog.Bll
                  
                     var changes = mapping.ToDwItems(_service, auditDetailsResponse.AuditDetail, languageCode);
                     if (changes.Any())
+                    {
                         audtLogs.AddRange(changes);
+                        fieldsChangeCount += changes.Count();
+                    }
 
                 }
                 moreRecords = resp.EntityCollection.MoreRecords;
@@ -101,7 +104,7 @@ namespace Crm.ImportAuditLog.Bll
 
             }
             while (moreRecords);
-            job.UpdateEndDateOnComplete(gCount, last);
+            job.UpdateEndDateOnComplete(fieldsChangeCount,crmLogsItemsCount, last);
 
         }
     }

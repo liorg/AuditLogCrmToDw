@@ -14,6 +14,7 @@ namespace Crm.ImportAuditLog.DataModel
         [Key]
         public Guid JobId { get; set; }
         public DateTime EndDate { get; set; }
-        public int CountRecs { get; set; }
+        public int CountFieldsChange { get; set; }
+        public int CountCrmLogs { get; set; }
     }
 }

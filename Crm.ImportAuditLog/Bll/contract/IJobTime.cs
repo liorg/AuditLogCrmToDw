@@ -11,6 +11,6 @@ namespace Crm.ImportAuditLog.Bll
     {
         DateTime RetrieveLastDateJob(IConfiguration config);
 
-        void UpdateEndDateOnComplete(int count, DateTime endDate);
+        void UpdateEndDateOnComplete(int fieldsChangeCount, int countCrm, DateTime endDate);
     }
 }
