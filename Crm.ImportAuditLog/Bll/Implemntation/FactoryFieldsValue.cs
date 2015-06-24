@@ -62,7 +62,7 @@ namespace Crm.ImportAuditLog.Bll
                 case StatusType:
                     return new PicklistFieldValue(_log);
                 case MoneyType:
-                    return new PicklistFieldValue(_log);
+                    return new MoneyFieldValue(_log);
                 default:
                     return new SimpleFieldValue(_log);
 

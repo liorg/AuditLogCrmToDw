@@ -66,7 +66,7 @@ namespace Crm.ImportAuditLog.Bll
                     Orders = { new OrderExpression
                                 {
                                     AttributeName = "createdon",
-                                    OrderType = OrderType.Descending// must change asc
+                                    OrderType = OrderType.Ascending
                                 }
                             }
                 };

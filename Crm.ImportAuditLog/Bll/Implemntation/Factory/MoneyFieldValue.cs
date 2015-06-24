@@ -22,7 +22,8 @@ namespace Crm.ImportAuditLog.Bll
             var val = base.GetValue(key, entity);
             if (entity.Contains(key) && entity[key] != null && entity[key] is Money)
             {
-                val.FieldValue = entity.GetAttributeValue<Money>(key).Value.ToString();
+                  val.FieldValue = entity.FormattedValues.Contains(key) ? entity.FormattedValues[key] : entity.GetAttributeValue<Money>(key).Value.ToString();
+                
             }
             return val;
         }

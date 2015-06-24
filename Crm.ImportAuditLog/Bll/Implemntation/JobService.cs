@@ -13,6 +13,7 @@ namespace Crm.ImportAuditLog.Bll
     {
         Action<string> _log;
         Guid? _jobid;
+
         public JobService(Action<string> log)
         {
             _log = log;
@@ -30,7 +31,7 @@ namespace Crm.ImportAuditLog.Bll
                 var dateLast = context.Jobs.Take(1).OrderByDescending(j => j.EndDate).FirstOrDefault();
                 if (dateLast == null)
                 {
-                    dt = DateTime.Now.AddDays(lastXDays);
+                    dt = DateTime.UtcNow.AddDays(lastXDays);
                     _log("dateLast is null then" + dt.ToString("yyyyMMdd hh:mm:ss"));
                 }
                 else
@@ -61,8 +62,6 @@ namespace Crm.ImportAuditLog.Bll
                 context.SaveChanges();
             }
             _log("End UpdateEndDateOnComplete");
-
-
         }
 
         public Guid JobId
